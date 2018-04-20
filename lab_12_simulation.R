@@ -7,8 +7,8 @@ generate_data = function(n, p) {
 
 model_select = function(covariates, responses, cutoff) {
   lm = lm(responses ~ covariates)
-  coefs = summary(lm)$Coefficients
-  pvals = coefs[, 3]
+  coefs = summary(lm)[4]
+  pvals = coefs[[1]][, 3]
   retain = covariates[, which(pvals <= cutoff)]
   if (length(retain) == 0) {
     return("")
@@ -23,8 +23,8 @@ run_simulation = function(n_trials, n, p, cutoff) {
     covariates = rand.dat[[1]]
     responses = rand.dat[[2]]
     lm = model_select(covariates, responses, cutoff)
-    coefs = summary(lm)$Coefficients
-    pvals = coefs[, 3]
+    coefs = summary(lm)[4]
+    pvals = coefs[[1]][, 3]
     hist(pvals,
          xlab = "p value",
          ylab = "Frequency",
@@ -40,3 +40,4 @@ for (n.val in n) {
     run_simulation(5, n.val, p.val, 0.05)
   }
 }
+
