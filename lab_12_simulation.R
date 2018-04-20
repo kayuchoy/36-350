@@ -25,11 +25,18 @@ run_simulation = function(n_trials, n, p, cutoff) {
     lm = model_select(covariates, responses, cutoff)
     coefs = summary(lm)[4]
     pvals = coefs[[1]][, 3]
-    hist(pvals,
-         xlab = "p value",
-         ylab = "Frequency",
-         main = "Histogram of p values of Covariates from Linear Regression")
+    saveRDS(pvals, file = "pvals.rds")
+    make_plot("pvals.rds")
   }
+}
+
+make_plot = function(datapath) {
+  pvals = load(datapath)
+  hist(pvals,
+       xlab = "p value",
+       ylab = "Frequency",
+       main = "Histogram of p values of Covariates from Linear Regression")
+  
 }
 
 n = c(100, 1000, 10000)
