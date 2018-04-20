@@ -31,3 +31,12 @@ run_simulation = function(n_trials, n, p, cutoff) {
          main = "Histogram of p values of Covariates from Linear Regression")
   }
 }
+
+n = c(100, 1000, 10000)
+p = c(10, 20, 50)
+
+for (n.val in n) {
+  for (p.val in p) {
+    run_simulation(5, n.val, p.val, 0.05)
+  }
+}
